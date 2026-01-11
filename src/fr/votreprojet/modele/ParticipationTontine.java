@@ -21,12 +21,12 @@ public class ParticipationTontine {
     
     public void ajouterPaiement(Double montant) {
         paiements.add(montant);
-        System.out.println("💰 Paiement de " + montant + "€ enregistré pour " + etudiant.getNom());
+        System.out.println(" Paiement de " + montant + "€ enregistré pour " + etudiant.getNom());
     }
     
     public void recevoirTour() {
         this.aRecu = true;
-        System.out.println("🎁 " + etudiant.getNom() + " a reçu le tour de tontine");
+        System.out.println(" " + etudiant.getNom() + " a reçu le tour de tontine");
     }
     
     public Double getTotalPaye() {
@@ -34,7 +34,7 @@ public class ParticipationTontine {
     }
     
     public void afficherDetails() {
-        System.out.println("\n👤 PARTICIPATION TONTINE");
+        System.out.println("\n PARTICIPATION TONTINE");
         System.out.println("────────────────────────────");
         System.out.println("Étudiant : " + etudiant.getNom());
         System.out.println("Tontine : " + tontine.getNom());

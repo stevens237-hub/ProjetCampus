@@ -8,7 +8,7 @@ import java.util.*;
 public class RechercheProximite implements StrategieRecherche {
     @Override
     public List<Annonce> rechercher(Map<String, Object> criteres) {
-        System.out.println("📍 Recherche par proximité en cours...");
+        System.out.println(" Recherche par proximité en cours...");
         List<Annonce> resultats = new ArrayList<>();
         
         for (Annonce annonce : getAnnoncesTest()) {
@@ -55,18 +55,18 @@ public class RechercheProximite implements StrategieRecherche {
             return 0;
         });
         
-        System.out.println("✅ " + resultats.size() + " résultat(s) trouvé(s) à proximité");
+        System.out.println( resultats.size() + " résultat(s) trouvé(s) à proximité");
         return resultats;
     }
     
     private List<Annonce> getAnnoncesTest() {
         List<Annonce> annonces = new ArrayList<>();
-        Etudiant etudiantTest = new Etudiant("test@esisar.fr", "Testeur");
+        Etudiant etudiantTest = new Etudiant("test@univ_smb.fr", "Testeur");
         
-        Annonce a1 = new Annonce("Livre près du campus", "Livre disponible près du campus ESISAR", 
+        Annonce a1 = new Annonce("Livre près du campus", "Livre disponible près du campus d'Annecy", 
                                 Categorie.MATERIEL_SCOLAIRE, fr.votreprojet.util.TypeEchange.VENTE, 
                                 20.0, etudiantTest);
-        a1.setLocalisation("Campus ESISAR, Grenoble");
+        a1.setLocalisation("Campus Polytech, Annecy");
         a1.publier();
         
         Annonce a2 = new Annonce("Cours à distance", "Cours en ligne disponible", 
@@ -78,7 +78,7 @@ public class RechercheProximite implements StrategieRecherche {
         Annonce a3 = new Annonce("Colocation centre-ville", "Chambre en colocation", 
                                 Categorie.BIENS_QUOTIDIENS, fr.votreprojet.util.TypeEchange.LOCATION, 
                                 400.0, etudiantTest);
-        a3.setLocalisation("Centre-ville Grenoble");
+        a3.setLocalisation("Gare d'Annecy");
         a3.publier();
         
         annonces.add(a1);

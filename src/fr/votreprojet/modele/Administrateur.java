@@ -25,16 +25,16 @@ public class Administrateur extends Utilisateur implements Observateur {
     
     @Override
     public void actualiser(Sujet sujet, TypeEvenement typeEvenement) {
-        System.out.println("🛡️ Admin " + nom + " notifié : " + typeEvenement);
+        System.out.println(" Admin " + nom + " notifié : " + typeEvenement);
         
         switch (typeEvenement) {
             case SIGNALEMENT_CREE:
             case ANNONCE_SIGNALEE:
             case MESSAGE_SIGNALE:
-                System.out.println("   ⚠️ Action de modération requise !");
+                System.out.println("    Action de modération requise !");
                 break;
             case EVENEMENT_CREE:
-                System.out.println("   🔍 Nouvel événement à surveiller");
+                System.out.println("    Nouvel événement à surveiller");
                 break;
             case NOUVELLE_ANNONCE:
             case ANNONCE_MODIFIEE:
@@ -62,10 +62,10 @@ public class Administrateur extends Utilisateur implements Observateur {
             case UTILISATEUR_MODIFIE:
             case UTILISATEUR_VALIDE:
             case UTILISATEUR_SUSPENDU:
-                System.out.println("   ℹ️ Notification reçue : " + typeEvenement);
+                System.out.println("    Notification reçue : " + typeEvenement);
                 break;
             default:
-                System.out.println("   ⚠️ Événement non géré : " + typeEvenement);
+                System.out.println("    Événement non géré : " + typeEvenement);
                 break;
         }
     }
@@ -83,13 +83,13 @@ public class Administrateur extends Utilisateur implements Observateur {
     // Méthodes de modération
     public void validerUtilisateur(Utilisateur utilisateur) {
         utilisateur.setVerifie(true);
-        System.out.println("✅ Utilisateur " + utilisateur.getEmail() + " validé avec succès");
+        System.out.println(" Utilisateur " + utilisateur.getEmail() + " validé avec succès");
     }
     
     public void modererAnnonce(Annonce annonce) {
         if (annonce == null) return;
         
-        System.out.println("\n🔍 Modération de l'annonce : " + annonce.getTitre());
+        System.out.println("\n Modération de l'annonce : " + annonce.getTitre());
         
         Scanner scanner = new Scanner(System.in);
         try {
@@ -103,19 +103,19 @@ public class Administrateur extends Utilisateur implements Observateur {
             switch (choix) {
                 case 1:
                     annonce.setStatut(StatutAnnonce.PUBLIEE);
-                    System.out.println("✅ Annonce approuvée");
+                    System.out.println(" Annonce approuvée");
                     break;
                 case 2:
                     annonce.setStatut(StatutAnnonce.SIGNALÉE);
-                    System.out.println("⚠️ Annonce signalée");
+                    System.out.println(" Annonce signalée");
                     break;
                 case 3:
                     annonce.setStatut(StatutAnnonce.SUPPRIMÉE);
                     annonce.notifier(TypeEvenement.ANNONCE_SUPPRIMEE);
-                    System.out.println("🗑️ Annonce supprimée");
+                    System.out.println(" Annonce supprimée");
                     break;
                 default:
-                    System.out.println("❌ Choix invalide");
+                    System.out.println(" Choix invalide");
             }
         } finally {
             scanner.close();
@@ -125,7 +125,7 @@ public class Administrateur extends Utilisateur implements Observateur {
     public void traiterSignalement(Signalement signalement) {
         if (signalement == null) return;
         
-        System.out.println("\n⚖️ Traitement du signalement #" + signalement.getId());
+        System.out.println("\n Traitement du signalement #" + signalement.getId());
         System.out.println("Type : " + signalement.getType().getLibelle());
         System.out.println("Description : " + signalement.getDescription());
         
@@ -142,18 +142,18 @@ public class Administrateur extends Utilisateur implements Observateur {
             switch (choix) {
                 case 1:
                     signalement.setStatut(StatutSignalement.RÉSOLU);
-                    System.out.println("✅ Signalement résolu");
+                    System.out.println(" Signalement résolu");
                     break;
                 case 2:
                     signalement.setStatut(StatutSignalement.TRAITEMENT);
-                    System.out.println("📈 Signalement escaladé");
+                    System.out.println(" Signalement escaladé");
                     break;
                 case 3:
                     signalement.setStatut(StatutSignalement.REJETÉ);
-                    System.out.println("❌ Signalement rejeté");
+                    System.out.println(" Signalement rejeté");
                     break;
                 default:
-                    System.out.println("❌ Choix invalide");
+                    System.out.println(" Choix invalide");
             }
         } finally {
             scanner.close();
@@ -164,16 +164,16 @@ public class Administrateur extends Utilisateur implements Observateur {
     }
     
     public void surveillerAnnonces(List<Annonce> annonces) {
-        System.out.println("\n🔍 Surveillance des annonces");
+        System.out.println("\n Surveillance des annonces");
         for (Annonce annonce : annonces) {
             if (annonce.getStatut() == StatutAnnonce.SIGNALÉE) {
-                System.out.println("⚠️ Annonce signalée : " + annonce.getTitre());
+                System.out.println(" Annonce signalée : " + annonce.getTitre());
             }
         }
     }
     
     public void genererRapport() {
-        System.out.println("\n📊 RAPPORT D'ACTIVITÉ");
+        System.out.println("\n RAPPORT D'ACTIVITÉ");
         System.out.println("=========================");
         System.out.println("Administrateur : " + nom);
         System.out.println("Date : " + new Date());

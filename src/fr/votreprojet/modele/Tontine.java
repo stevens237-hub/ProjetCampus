@@ -34,7 +34,7 @@ public class Tontine extends SujetAbstrait {
     
     public void creer() {
         notifier(TypeEvenement.TONTINE_CREE);
-        System.out.println("✅ Tontine créée avec succès !");
+        System.out.println(" Tontine créée avec succès !");
     }
     
     public void modifier(String nouveauNom, Double nouveauMontant) {
@@ -52,7 +52,7 @@ public class Tontine extends SujetAbstrait {
         
         if (changement) {
             notifier(TypeEvenement.TONTINE_MODIFIEE);
-            System.out.println("✏️ Tontine modifiée avec succès");
+            System.out.println(" Tontine modifiée avec succès");
         }
     }
     
@@ -61,7 +61,7 @@ public class Tontine extends SujetAbstrait {
         ParticipationTontine participation = new ParticipationTontine(etudiant, this, ordre);
         participants.add(participation);
         notifier(TypeEvenement.TONTINE_NOUVEAU_PARTICIPANT);
-        System.out.println("✅ " + etudiant.getNom() + " a rejoint la tontine (ordre: " + ordre + ")");
+        System.out.println( etudiant.getNom() + " a rejoint la tontine (ordre: " + ordre + ")");
     }
     
     public void effectuerPaiement(Etudiant etudiant) {
@@ -69,16 +69,16 @@ public class Tontine extends SujetAbstrait {
             if (participation.getEtudiant().equals(etudiant)) {
                 participation.ajouterPaiement(montantMensuel);
                 notifier(TypeEvenement.TONTINE_PAIEMENT_EFFECTUE);
-                System.out.println("💰 " + etudiant.getNom() + " a effectué son paiement");
+                System.out.println( etudiant.getNom() + " a effectué son paiement");
                 return;
             }
         }
-        System.out.println("❌ Participant non trouvé");
+        System.out.println(" Participant non trouvé");
     }
     
     public void distribuerTour() {
         if (tourActuel > participants.size()) {
-            System.out.println("❌ Tous les tours ont été distribués");
+            System.out.println(" Tous les tours ont été distribués");
             return;
         }
         
@@ -86,7 +86,7 @@ public class Tontine extends SujetAbstrait {
             if (participation.getOrdreTour() == tourActuel && !participation.aRecu()) {
                 participation.recevoirTour();
                 notifier(TypeEvenement.TONTINE_TOUR_DISTRIBUE);
-                System.out.println("🎁 Tour " + tourActuel + " distribué à " + 
+                System.out.println(tourActuel + " distribué à " + 
                                  participation.getEtudiant().getNom());
                 tourActuel++;
                 return;
@@ -96,7 +96,7 @@ public class Tontine extends SujetAbstrait {
     
     public void terminer() {
         this.statut = StatutTontine.TERMINÉE;
-        System.out.println("🏁 Tontine terminée");
+        System.out.println(" Tontine terminée");
     }
     
     @Override
@@ -105,7 +105,7 @@ public class Tontine extends SujetAbstrait {
     }
     
     public void afficherDetails() {
-        System.out.println("\n💰 TONTINE #" + id);
+        System.out.println("\n TONTINE #" + id);
         System.out.println("════════════════════════════════");
         System.out.println("Nom : " + nom);
         System.out.println("Montant mensuel : " + montantMensuel + "€");

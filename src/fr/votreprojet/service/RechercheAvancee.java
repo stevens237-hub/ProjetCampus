@@ -9,7 +9,7 @@ import java.util.*;
 public class RechercheAvancee implements StrategieRecherche {
     @Override
     public List<Annonce> rechercher(Map<String, Object> criteres) {
-        System.out.println("🔍🔍 Recherche avancée en cours...");
+        System.out.println(" Recherche avancée en cours...");
         List<Annonce> resultats = new ArrayList<>();
         
         for (Annonce annonce : getAnnoncesTest()) {
@@ -72,13 +72,13 @@ public class RechercheAvancee implements StrategieRecherche {
             resultats.sort(Comparator.comparing(Annonce::getDatePublication).reversed());
         }
         
-        System.out.println("✅ " + resultats.size() + " résultat(s) trouvé(s) avec recherche avancée");
+        System.out.println(resultats.size() + " résultat(s) trouvé(s) avec recherche avancée");
         return resultats;
     }
     
     private List<Annonce> getAnnoncesTest() {
         List<Annonce> annonces = new ArrayList<>();
-        Etudiant etudiantTest = new Etudiant("test@esisar.fr", "Testeur");
+        Etudiant etudiantTest = new Etudiant("test@univ_smb.fr", "Testeur");
         
         Annonce a1 = new Annonce("Livre Java Avancé", "Livre sur les design patterns en Java", 
                                 Categorie.MATERIEL_SCOLAIRE, fr.votreprojet.util.TypeEchange.VENTE, 

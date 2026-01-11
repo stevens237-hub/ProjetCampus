@@ -35,7 +35,7 @@ public class Evaluation extends SujetAbstrait {
     
     public void publier() {
         notifier(TypeEvenement.EVALUATION_AJOUTEE);
-        System.out.println("⭐ Évaluation publiée avec succès");
+        System.out.println(" Évaluation publiée avec succès");
     }
     
     public Signalement signaler(TypeSignalement type, String description) {
@@ -56,7 +56,7 @@ public class Evaluation extends SujetAbstrait {
         }
         
         notifier(TypeEvenement.EVALUATION_MODIFIEE);
-        System.out.println("✏️ Évaluation modifiée");
+        System.out.println(" Évaluation modifiée");
     }
     
     @Override
@@ -65,7 +65,7 @@ public class Evaluation extends SujetAbstrait {
     }
     
     public void afficher() {
-        System.out.println("\n⭐ ÉVALUATION #" + id);
+        System.out.println("\n ÉVALUATION #" + id);
         System.out.println("────────────────────────────");
         System.out.println("Note : " + note + "/5");
         System.out.println("Commentaire : " + commentaire);

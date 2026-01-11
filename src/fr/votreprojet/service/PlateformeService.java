@@ -39,9 +39,9 @@ public class PlateformeService {
         FabriqueEtudiant fabriqueEtudiant = new FabriqueEtudiant();
         FabriqueAdministrateur fabriqueAdmin = new FabriqueAdministrateur();
         
-        Etudiant etudiant1 = (Etudiant) fabriqueEtudiant.creerUtilisateur("jean@esisar.fr", "Jean Dupont");
-        Etudiant etudiant2 = (Etudiant) fabriqueEtudiant.creerUtilisateur("marie@esisar.fr", "Marie Curie");
-        Administrateur admin = (Administrateur) fabriqueAdmin.creerUtilisateur("admin@esisar.fr", "Admin System");
+        Etudiant etudiant1 = (Etudiant) fabriqueEtudiant.creerUtilisateur("jean@univ_smb.fr", "Jean Dupont");
+        Etudiant etudiant2 = (Etudiant) fabriqueEtudiant.creerUtilisateur("marie@univ_smb.fr", "Marie Curie");
+        Administrateur admin = (Administrateur) fabriqueAdmin.creerUtilisateur("admin@univ_smb.fr", "Admin System");
         
         ajouterUtilisateur(etudiant1);
         ajouterUtilisateur(etudiant2);
@@ -61,12 +61,12 @@ public class PlateformeService {
         // Créer un événement de test
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 7);
-        Evenement evenement = etudiant1.creerEvenement("Soirée ESISAR", "Soirée entre étudiants", 
-                                                      cal.getTime(), "BDE ESISAR", 50);
+        Evenement evenement = etudiant1.creerEvenement("Soiree Polytech", "Soiree entre etudiants", 
+                                                      cal.getTime(), "BDE Polytech", 50);
         evenement.creer();
         ajouterEvenement(evenement);
         
-        System.out.println("✅ Données de test initialisées");
+        System.out.println(" Données de test initialisées");
     }
     
     // Méthodes d'ajout
@@ -132,16 +132,16 @@ public class PlateformeService {
         for (Utilisateur user : utilisateurs.values()) {
             if (user.getEmail().equals(email) && user.getNom().equals(nom)) {
                 utilisateurConnecte = user;
-                System.out.println("✅ Connexion réussie : " + user.getNom());
+                System.out.println(" Connexion réussie : " + user.getNom());
                 return true;
             }
         }
-        System.out.println("❌ Échec de connexion");
+        System.out.println(" Échec de connexion");
         return false;
     }
     
     public void deconnecter() {
-        System.out.println("👋 Déconnexion de : " + (utilisateurConnecte != null ? utilisateurConnecte.getNom() : "Personne"));
+        System.out.println(" Déconnexion de : " + (utilisateurConnecte != null ? utilisateurConnecte.getNom() : "Personne"));
         utilisateurConnecte = null;
     }
     

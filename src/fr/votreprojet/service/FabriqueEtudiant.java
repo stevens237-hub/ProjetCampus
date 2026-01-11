@@ -6,7 +6,7 @@ import fr.votreprojet.modele.Utilisateur;
 public class FabriqueEtudiant implements FabriqueUtilisateur {
     @Override
     public Utilisateur creerUtilisateur(String email, String nom) {
-        System.out.println("🎓 Création d'un nouvel étudiant : " + nom);
+        System.out.println(" Création d'un nouvel étudiant : " + nom);
         return new Etudiant(email, nom);
     }
     

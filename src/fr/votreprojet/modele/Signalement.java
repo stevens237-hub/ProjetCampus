@@ -33,29 +33,29 @@ public class Signalement extends SujetAbstrait implements Observateur {
     
     public void creer() {
         notifier(TypeEvenement.SIGNALEMENT_CREE);
-        System.out.println("⚠️ Signalement créé avec succès");
+        System.out.println(" Signalement créé avec succès");
     }
     
     public void escalader() {
         this.statut = StatutSignalement.TRAITEMENT;
         notifier(TypeEvenement.SIGNALEMENT_ESCALADE);
-        System.out.println("📈 Signalement escaladé");
+        System.out.println(" Signalement escaladé");
     }
     
     public void resoudre() {
         this.statut = StatutSignalement.RÉSOLU;
         notifier(TypeEvenement.SIGNALEMENT_RESOLU);
-        System.out.println("✅ Signalement résolu");
+        System.out.println(" Signalement résolu");
     }
     
     public void rejeter() {
         this.statut = StatutSignalement.REJETÉ;
-        System.out.println("❌ Signalement rejeté");
+        System.out.println(" Signalement rejeté");
     }
     
     public void ajouterPreuve(String preuve) {
         preuves.add(preuve);
-        System.out.println("📎 Preuve ajoutée");
+        System.out.println(" Preuve ajoutée");
     }
     
     @Override
@@ -67,11 +67,11 @@ public class Signalement extends SujetAbstrait implements Observateur {
     @Override
     public void actualiser(Sujet sujet, TypeEvenement typeEvenement) {
         // Logique de notification pour le signalement
-        System.out.println("⚠️ Signalement #" + id + " notifié : " + typeEvenement);
+        System.out.println(" Signalement #" + id + " notifié : " + typeEvenement);
     }
     
     public void afficherDetails() {
-        System.out.println("\n⚠️ SIGNALEMENT #" + id);
+        System.out.println("\n SIGNALEMENT #" + id);
         System.out.println("════════════════════════════════");
         System.out.println("Type : " + type.getLibelle());
         System.out.println("Description : " + description);

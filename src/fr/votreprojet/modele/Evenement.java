@@ -36,7 +36,7 @@ public class Evenement extends SujetAbstrait {
     
     public void creer() {
         notifier(TypeEvenement.EVENEMENT_CREE);
-        System.out.println("✅ Événement créé avec succès !");
+        System.out.println(" Événement créé avec succès !");
     }
     
     public void modifier(String nouveauTitre, String nouvelleDescription, Date nouvelleDate) {
@@ -59,23 +59,23 @@ public class Evenement extends SujetAbstrait {
         
         if (changement) {
             notifier(TypeEvenement.EVENEMENT_MODIFIE);
-            System.out.println("✏️ Événement modifié avec succès");
+            System.out.println(" Événement modifié avec succès");
         }
     }
     
     public void annuler() {
         this.statut = StatutEvenement.ANNULE;
         notifier(TypeEvenement.EVENEMENT_ANNULE);
-        System.out.println("❌ Événement annulé");
+        System.out.println(" Événement annulé");
     }
     
     public void ajouterParticipant(Etudiant etudiant) {
         if (participants.size() < capaciteMax && !participants.contains(etudiant)) {
             participants.add(etudiant);
             notifier(TypeEvenement.EVENEMENT_INSCRIT);
-            System.out.println("✅ " + etudiant.getNom() + " inscrit à l'événement");
+            System.out.println(" " + etudiant.getNom() + " inscrit à l'événement");
         } else if (participants.size() >= capaciteMax) {
-            System.out.println("❌ Capacité maximale atteinte");
+            System.out.println(" Capacité maximale atteinte");
         }
     }
     
@@ -83,18 +83,18 @@ public class Evenement extends SujetAbstrait {
         if (participants.contains(etudiant)) {
             participants.remove(etudiant);
             notifier(TypeEvenement.EVENEMENT_DESINSCRIT);
-            System.out.println("📤 " + etudiant.getNom() + " désinscrit de l'événement");
+            System.out.println(" " + etudiant.getNom() + " désinscrit de l'événement");
         }
     }
     
     public void demarrer() {
         this.statut = StatutEvenement.EN_COURS;
-        System.out.println("🎬 Événement démarré");
+        System.out.println(" Événement démarré");
     }
     
     public void terminer() {
         this.statut = StatutEvenement.TERMINÉ;
-        System.out.println("🏁 Événement terminé");
+        System.out.println(" Événement terminé");
     }
     
     @Override
@@ -103,7 +103,7 @@ public class Evenement extends SujetAbstrait {
     }
     
     public void afficherDetails() {
-        System.out.println("\n🎉 ÉVÉNEMENT #" + id);
+        System.out.println("\n ÉVÉNEMENT #" + id);
         System.out.println("════════════════════════════════");
         System.out.println("Titre : " + titre);
         System.out.println("Description : " + description);

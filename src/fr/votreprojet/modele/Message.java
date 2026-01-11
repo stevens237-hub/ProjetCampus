@@ -31,14 +31,14 @@ public class Message extends SujetAbstrait {
     
     public void envoyer() {
         notifier(TypeEvenement.NOUVEAU_MESSAGE);
-        System.out.println("📤 Message envoyé à " + destinataire.getNom());
+        System.out.println(" Message envoyé à " + destinataire.getNom());
     }
     
     public void marquerCommeLu() {
         if (!this.lu) {
             this.lu = true;
             notifier(TypeEvenement.MESSAGE_LU);
-            System.out.println("👁️ Message marqué comme lu");
+            System.out.println(" Message marqué comme lu");
         }
     }
     
@@ -56,7 +56,7 @@ public class Message extends SujetAbstrait {
     }
     
     public void afficher() {
-        System.out.println("\n💬 MESSAGE #" + id);
+        System.out.println("\n MESSAGE #" + id);
         System.out.println("────────────────────────────");
         System.out.println("De : " + expediteur.getNom());
         System.out.println("À : " + destinataire.getNom());

@@ -17,8 +17,8 @@ public class Etudiant extends Utilisateur implements Observateur {
     public Etudiant(String email, String nom) {
         super(email, nom);
         this.numeroEtudiant = generateNumeroEtudiant();
-        this.campus = "Grenoble";
-        this.filiere = "Informatique";
+        this.campus = "Annecy";
+        this.filiere = "IDU";
         this.anneeEtude = 1;
         this.competences = new ArrayList<>();
         this.strategieRecherche = null; // Initialisé plus tard
@@ -30,20 +30,20 @@ public class Etudiant extends Utilisateur implements Observateur {
     
     @Override
     public void actualiser(Sujet sujet, TypeEvenement typeEvenement) {
-        System.out.println("👤 " + nom + " notifié : " + typeEvenement);
+        System.out.println( nom + " notifié : " + typeEvenement);
         
         switch (typeEvenement) {
             case NOUVELLE_ANNONCE:
                 if (sujet instanceof Annonce) {
                     Annonce annonce = (Annonce) sujet;
-                    System.out.println("   📢 Nouvelle annonce : " + annonce.getTitre());
+                    System.out.println("    Nouvelle annonce : " + annonce.getTitre());
                 }
                 break;
             case NOUVEAU_MESSAGE:
-                System.out.println("   💬 Vous avez un nouveau message");
+                System.out.println("    Vous avez un nouveau message");
                 break;
             case EVENEMENT_CREE:
-                System.out.println("   🎉 Nouvel événement créé");
+                System.out.println("    Nouvel événement créé");
                 break;
             case ANNONCE_MODIFIEE:
             case ANNONCE_SUPPRIMEE:
@@ -73,10 +73,10 @@ public class Etudiant extends Utilisateur implements Observateur {
             case UTILISATEUR_VALIDE:
             case UTILISATEUR_SUSPENDU:
                 // Pour tous les autres cas, on affiche juste le type
-                System.out.println("   ℹ️ Événement reçu : " + typeEvenement);
+                System.out.println("   ℹ Événement reçu : " + typeEvenement);
                 break;
             default:
-                System.out.println("   ⚠️ Événement non géré : " + typeEvenement);
+                System.out.println("    Événement non géré : " + typeEvenement);
                 break;
         }
     }
@@ -97,44 +97,44 @@ public class Etudiant extends Utilisateur implements Observateur {
     // Méthodes métier
     public Annonce creerAnnonce(String titre, String description, Categorie categorie, TypeEchange typeEchange, Double prix) {
         Annonce annonce = new Annonce(titre, description, categorie, typeEchange, prix, this);
-        System.out.println("✅ Annonce créée avec succès !");
+        System.out.println(" Annonce créée avec succès !");
         return annonce;
     }
     
     public void sabonnerAnnonces(Categorie categorie) {
-        System.out.println("🔔 Abonnement aux annonces de catégorie : " + categorie.getLibelle());
+        System.out.println(" Abonnement aux annonces de catégorie : " + categorie.getLibelle());
     }
     
     public Evenement creerEvenement(String titre, String description, Date date, String lieu, int capaciteMax) {
         Evenement evenement = new Evenement(titre, description, date, lieu, capaciteMax, this);
-        System.out.println("✅ Événement créé avec succès !");
+        System.out.println(" Événement créé avec succès !");
         return evenement;
     }
     
     public void sinscrireEvenement(Evenement evenement) {
         if (evenement != null) {
             evenement.ajouterParticipant(this);
-            System.out.println("✅ Inscription à l'événement réussie !");
+            System.out.println(" Inscription à l'événement réussie !");
         }
     }
     
     public Tontine creerTontine(String nom, Double montantMensuel) {
         Tontine tontine = new Tontine(nom, montantMensuel, this);
-        System.out.println("✅ Tontine créée avec succès !");
+        System.out.println(" Tontine créée avec succès !");
         return tontine;
     }
     
     public void rejoindreTontine(Tontine tontine) {
         if (tontine != null) {
             tontine.ajouterParticipant(this);
-            System.out.println("✅ Participation à la tontine réussie !");
+            System.out.println(" Participation à la tontine réussie !");
         }
     }
     
     public Message envoyerMessage(Etudiant destinataire, String contenu) {
         Message message = new Message(contenu, this, destinataire);
         message.envoyer();
-        System.out.println("✅ Message envoyé à " + destinataire.getNom());
+        System.out.println(" Message envoyé à " + destinataire.getNom());
         return message;
     }
     
@@ -144,14 +144,14 @@ public class Etudiant extends Utilisateur implements Observateur {
         }
         
         Evaluation evaluation = new Evaluation(note, commentaire, this, evalue);
-        System.out.println("✅ Évaluation ajoutée pour " + evalue.getNom());
+        System.out.println(" Évaluation ajoutée pour " + evalue.getNom());
         return evaluation;
     }
     
     public Signalement signalerAnnonce(Annonce annonce, TypeSignalement type, String description) {
         Signalement signalement = new Signalement(type, description, this);
         signalement.setCibleAnnonce(annonce);
-        System.out.println("⚠️ Annonce signalée avec succès");
+        System.out.println(" Annonce signalée avec succès");
         return signalement;
     }
     

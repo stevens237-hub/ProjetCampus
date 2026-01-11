@@ -29,7 +29,7 @@ public class Annonce extends SujetAbstrait {
         this.typeEchange = typeEchange;
         this.prix = prix;
         this.createur = createur;
-        this.localisation = "Campus ESISAR";
+        this.localisation = "Campus Polytech";
         this.statut = StatutAnnonce.SUPPRIMÉE;
         this.signalements = new ArrayList<>();
         this.datePublication = new Date();
@@ -46,7 +46,7 @@ public class Annonce extends SujetAbstrait {
             this.statut = StatutAnnonce.PUBLIEE;
             this.datePublication = new Date();
             notifier(TypeEvenement.NOUVELLE_ANNONCE);
-            System.out.println("✅ Annonce publiée avec succès !");
+            System.out.println(" Annonce publiée avec succès !");
         }
     }
     
@@ -65,7 +65,7 @@ public class Annonce extends SujetAbstrait {
         
         if (changement) {
             notifier(TypeEvenement.ANNONCE_MODIFIEE);
-            System.out.println("✏️ Annonce modifiée avec succès");
+            System.out.println(" Annonce modifiée avec succès");
         }
     }
     
@@ -73,7 +73,7 @@ public class Annonce extends SujetAbstrait {
         this.statut = StatutAnnonce.SUPPRIMÉE;
         notifier(TypeEvenement.ANNONCE_SUPPRIMEE);
         viderObservateurs();
-        System.out.println("🗑️ Annonce supprimée");
+        System.out.println(" Annonce supprimée");
     }
     
     public Signalement signaler(TypeSignalement type, String description) {
@@ -87,13 +87,13 @@ public class Annonce extends SujetAbstrait {
     
     public void archiver() {
         this.statut = StatutAnnonce.TERMINÉE;
-        System.out.println("📁 Annonce archivée");
+        System.out.println(" Annonce archivée");
     }
     
     public void reserver() {
         this.statut = StatutAnnonce.RÉSERVÉE;
         notifier(TypeEvenement.ANNONCE_RESERVEE);
-        System.out.println("🔒 Annonce réservée");
+        System.out.println(" Annonce réservée");
     }
     
     @Override
@@ -102,7 +102,7 @@ public class Annonce extends SujetAbstrait {
     }
     
     public void afficherDetails() {
-        System.out.println("\n📢 ANNONCE #" + id);
+        System.out.println("\n ANNONCE #" + id);
         System.out.println("════════════════════════════════");
         System.out.println("Titre : " + titre);
         System.out.println("Description : " + description);

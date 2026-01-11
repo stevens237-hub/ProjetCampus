@@ -8,7 +8,7 @@ import java.util.*;
 public class RechercheSimple implements StrategieRecherche {
     @Override
     public List<Annonce> rechercher(Map<String, Object> criteres) {
-        System.out.println("🔍 Recherche simple en cours...");
+        System.out.println(" Recherche simple en cours...");
         List<Annonce> resultats = new ArrayList<>();
         
         // Simulation - dans la vraie application, on irait chercher dans une base de données
@@ -41,14 +41,14 @@ public class RechercheSimple implements StrategieRecherche {
             }
         }
         
-        System.out.println("✅ " + resultats.size() + " résultat(s) trouvé(s)");
+        System.out.println( resultats.size() + " résultat(s) trouvé(s)");
         return resultats;
     }
     
     private List<Annonce> getAnnoncesTest() {
         // Annonces de test
         List<Annonce> annonces = new ArrayList<>();
-        Etudiant etudiantTest = new Etudiant("test@esisar.fr", "Testeur");
+        Etudiant etudiantTest = new Etudiant("test@univ_smb.fr", "Testeur");
         
         Annonce a1 = new Annonce("Livre Java", "Livre sur la programmation Java", 
                                 Categorie.MATERIEL_SCOLAIRE, fr.votreprojet.util.TypeEchange.VENTE, 

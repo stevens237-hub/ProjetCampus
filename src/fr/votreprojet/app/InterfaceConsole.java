@@ -23,7 +23,7 @@ public class InterfaceConsole {
     
     public void demarrer() {
         System.out.println("╔══════════════════════════════════════════╗");
-        System.out.println("║    PLATEFORME COLLABORATIVE ESISAR       ║");
+        System.out.println("║       PLATEFORME COLLABORATIVE           ║");
         System.out.println("║                                          ║");
         System.out.println("╚══════════════════════════════════════════╝");
         
@@ -83,7 +83,7 @@ public class InterfaceConsole {
     private void afficherMenuEtudiant() {
         Etudiant etudiant = (Etudiant) plateforme.getUtilisateurConnecte();
         
-        System.out.println("\n🎓 MENU ÉTUDIANT");
+        System.out.println("\n MENU ÉTUDIANT");
         System.out.println("1.  Gérer mes annonces");
         System.out.println("2.  Rechercher des annonces");
         System.out.println("3.  Événements");
@@ -219,17 +219,17 @@ public class InterfaceConsole {
     }
     
     private void modeDemo() {
-        System.out.println("\n🎮 MODE DÉMO");
+        System.out.println("\n MODE DÉMO");
         System.out.println("1. Se connecter en tant qu'étudiant");
         System.out.println("2. Se connecter en tant qu'administrateur");
-        System.out.print("👉 Votre choix : ");
+        System.out.print(" Votre choix : ");
         
         int choix = lireEntier(1, 2);
         
         if (choix == 1) {
-            plateforme.connecter("jean@esisar.fr", "Jean Dupont");
+            plateforme.connecter("jean@univ_smb.fr", "Jean Dupont");
         } else {
-            plateforme.connecter("admin@esisar.fr", "Admin System");
+            plateforme.connecter("admin@univ_smb.fr", "Admin System");
         }
         pause();
     }
@@ -301,7 +301,7 @@ public class InterfaceConsole {
         List<Annonce> mesAnnonces = getAnnoncesEtudiant(etudiant);
         
         if (mesAnnonces.isEmpty()) {
-            System.out.println("📭 Vous n'avez pas d'annonces à supprimer.");
+            System.out.println(" Vous n'avez pas d'annonces à supprimer.");
             pause();
             return;
         }
@@ -463,7 +463,7 @@ public class InterfaceConsole {
         System.out.println("2.  Voir les événements à venir");
         System.out.println("3.  S'inscrire à un événement");
         System.out.println("4.  Retour");
-        System.out.print("👉 Votre choix : ");
+        System.out.print(" Votre choix : ");
         
         int choix = lireEntier(1, 4);
         
@@ -520,7 +520,7 @@ public class InterfaceConsole {
                 System.out.println("    " + event.getParticipants().size() + "/" + event.getCapaciteMax() + " participants");
             }
             
-            System.out.print("\n📥 Voir les détails d'un événement (0 pour retour) : ");
+            System.out.print("\n Voir les détails d'un événement (0 pour retour) : ");
             int choix = lireEntier(0, evenements.size());
             
             if (choix > 0) {
@@ -555,7 +555,7 @@ public class InterfaceConsole {
             System.out.println("1.  Valider le compte");
             System.out.println("2.  Voir le profil");
             System.out.println("3.  Retour");
-            System.out.print("👉 Votre choix : ");
+            System.out.print(" Votre choix : ");
             
             int action = lireEntier(1, 3);
             
@@ -625,7 +625,7 @@ public class InterfaceConsole {
                 System.out.println("    Date: " + signalement.getDateSignalement());
             }
             
-            System.out.print("\n🔍 Sélectionner un signalement à traiter (0 pour retour) : ");
+            System.out.print("\n Sélectionner un signalement à traiter (0 pour retour) : ");
             int choix = lireEntier(0, signalementsEnAttente.size());
             
             if (choix > 0) {
@@ -699,7 +699,7 @@ public class InterfaceConsole {
         
         List<Evenement> evenements = plateforme.rechercherEvenements();
         if (evenements.isEmpty()) {
-            System.out.println("📭 Aucun événement disponible pour l'inscription.");
+            System.out.println(" Aucun événement disponible pour l'inscription.");
             pause();
             return;
         }
@@ -727,7 +727,7 @@ public class InterfaceConsole {
         System.out.println("2.  Voir les tontines disponibles");
         System.out.println("3.  Rejoindre une tontine");
         System.out.println("4.  Retour");
-        System.out.print("👉 Votre choix : ");
+        System.out.print(" Votre choix : ");
         
         int choix = lireEntier(1, 4);
         
@@ -796,7 +796,7 @@ public class InterfaceConsole {
         System.out.println("1.  Envoyer un message");
         System.out.println("2.  Voir mes messages");
         System.out.println("3.  Retour");
-        System.out.print("👉 Votre choix : ");
+        System.out.print(" Votre choix : ");
         
         int choix = lireEntier(1, 3);
         
@@ -810,7 +810,7 @@ public class InterfaceConsole {
         System.out.println("1.  Évaluer un utilisateur");
         System.out.println("2.  Voir mes évaluations");
         System.out.println("3.  Retour");
-        System.out.print("👉 Votre choix : ");
+        System.out.print(" Votre choix : ");
         
         int choix = lireEntier(1, 3);
         
@@ -833,7 +833,7 @@ public class InterfaceConsole {
         }
         
         if (autresUtilisateurs.isEmpty()) {
-            System.out.println("👥 Aucun autre utilisateur à évaluer.");
+            System.out.println(" Aucun autre utilisateur à évaluer.");
             pause();
             return;
         }
@@ -875,7 +875,7 @@ public class InterfaceConsole {
         System.out.println("2.  Signaler un message");
         System.out.println("3.  Voir mes signalements");
         System.out.println("4.  Retour");
-        System.out.print("👉 Votre choix : ");
+        System.out.print(" Votre choix : ");
         
         int choix = lireEntier(1, 4);
         
@@ -950,7 +950,7 @@ public class InterfaceConsole {
         }
         
         if (mesSignalements.isEmpty()) {
-            System.out.println("📭 Vous n'avez créé aucun signalement.");
+            System.out.println(" Vous n'avez créé aucun signalement.");
         } else {
             System.out.println("\n MES SIGNALEMENTS (" + mesSignalements.size() + ")");
             for (int i = 0; i < mesSignalements.size(); i++) {
@@ -961,7 +961,7 @@ public class InterfaceConsole {
                 System.out.println("    Statut: " + s.getStatut().getLibelle());
                 
                 if (s.getCibleAnnonce() != null) {
-                    System.out.println("   📢 Cible: Annonce - " + s.getCibleAnnonce().getTitre());
+                    System.out.println("    Cible: Annonce - " + s.getCibleAnnonce().getTitre());
                 }
             }
         }
@@ -976,7 +976,7 @@ public class InterfaceConsole {
         System.out.println("2.  Surveiller les messages");
         System.out.println("3.  Surveiller les événements");
         System.out.println("4.  Retour");
-        System.out.print("👉 Votre choix : ");
+        System.out.print(" Votre choix : ");
         
         int choix = lireEntier(1, 4);
         
@@ -985,10 +985,10 @@ public class InterfaceConsole {
                 admin.surveillerAnnonces(new ArrayList<>(plateforme.getAnnonces().values()));
                 break;
             case 2:
-                System.out.println("📱 Surveillance des messages en cours de développement...");
+                System.out.println(" Surveillance des messages en cours de développement...");
                 break;
             case 3:
-                System.out.println("📱 Surveillance des événements en cours de développement...");
+                System.out.println(" Surveillance des événements en cours de développement...");
                 break;
         }
         pause();

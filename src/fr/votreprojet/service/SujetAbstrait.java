@@ -15,7 +15,7 @@ public abstract class SujetAbstrait implements Sujet {
         synchronized (lock) {
             if (observateur != null && !observateurs.contains(observateur)) {
                 observateurs.add(observateur);
-                System.out.println("✅ " + getClass().getSimpleName() + " : Observateur attaché");
+                System.out.println(getClass().getSimpleName() + " : Observateur attaché");
             }
         }
     }
@@ -24,7 +24,7 @@ public abstract class SujetAbstrait implements Sujet {
     public void detacher(Observateur observateur) {
         synchronized (lock) {
             observateurs.remove(observateur);
-            System.out.println("📤 " + getClass().getSimpleName() + " : Observateur détaché");
+            System.out.println(getClass().getSimpleName() + " : Observateur détaché");
         }
     }
     
@@ -35,14 +35,14 @@ public abstract class SujetAbstrait implements Sujet {
         }
         
         synchronized (lock) {
-            System.out.println("🔔 " + getClass().getSimpleName() + " : Notification '" + 
+            System.out.println(getClass().getSimpleName() + " : Notification '" + 
                              typeEvenement + "' à " + observateurs.size() + " observateur(s)");
             
             for (Observateur observateur : observateurs) {
                 try {
                     observateur.actualiser(this, typeEvenement);
                 } catch (Exception e) {
-                    System.err.println("❌ Erreur notification : " + e.getMessage());
+                    System.err.println(" Erreur notification : " + e.getMessage());
                 }
             }
         }
