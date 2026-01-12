@@ -2,7 +2,7 @@ package fr.votreprojet.app;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(" Lancement de la plateforme collaborative ESISAR...");
+        System.out.println(" Lancement de la plateforme collaborative...");
         
         try {
             InterfaceConsole interfaceConsole = new InterfaceConsole();
