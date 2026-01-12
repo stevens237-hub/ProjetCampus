@@ -259,7 +259,7 @@ public class InterfaceConsole {
         int choix = lireEntier(1, 2);
 
         if (choix == 1) {
-            plateforme.connecter("jean@univ_smb.fr", "Jean Dupont");
+            plateforme.connecter("steve@univ_smb.fr", "Steve Mboda");
         } else {
             plateforme.connecter("admin@univ_smb.fr", "Admin System");
         }
@@ -823,7 +823,7 @@ public class InterfaceConsole {
             }
 
             if (scanner.hasNextLine()) {
-                scanner.nextLine(); 
+                scanner.nextLine();
             }
         }
         pause();
@@ -1041,19 +1041,205 @@ public class InterfaceConsole {
     }
 
     private void gererMessagerie() {
-        System.out.println();
-        afficherSousTitre("MESSAGERIE");
-        System.out.println();
+        if (!plateforme.estEtudiantConnecte()) {
+            System.out.println(" Réservé aux étudiants.");
+            pause();
+            return;
+        }
 
+        Etudiant etudiant = (Etudiant) plateforme.getUtilisateurConnecte();
+
+        System.out.println("\n MESSAGERIE");
         System.out.println("1.  Envoyer un message");
-        System.out.println("2.  Voir mes messages");
-        System.out.println("3.  Retour");
-        System.out.print("\nVotre choix : ");
+        System.out.println("2.  Voir mes conversations");
+        System.out.println("3.  Marquer un message comme lu");
+        System.out.println("4.  Retour");
+        System.out.print(" Votre choix : ");
 
-        int choix = lireEntier(1, 3);
+        int choix = lireEntier(1, 4);
 
-        // Cette méthode serait implémentée avec une vraie base de données de messages
-        afficherMessageInfo("Fonctionnalité de messagerie en cours de développement...");
+        switch (choix) {
+            case 1:
+                envoyerMessage(etudiant);
+                break;
+            case 2:
+                afficherConversations(etudiant);
+                break;
+            case 3:
+                marquerMessageCommeLu(etudiant);
+                break;
+        }
+    }
+
+    private void envoyerMessage(Etudiant expediteur) {
+        System.out.println("\n ENVOYER UN MESSAGE");
+
+        // Lister les autres étudiants
+        List<Etudiant> autresEtudiants = new ArrayList<>();
+        for (Utilisateur user : plateforme.getUtilisateurs().values()) {
+            if (user instanceof Etudiant && !user.equals(expediteur)) {
+                autresEtudiants.add((Etudiant) user);
+            }
+        }
+
+        if (autresEtudiants.isEmpty()) {
+            System.out.println(" Aucun autre étudiant disponible.");
+            pause();
+            return;
+        }
+
+        System.out.println("Destinataires disponibles :");
+        for (int i = 0; i < autresEtudiants.size(); i++) {
+            System.out.println((i + 1) + ". " + autresEtudiants.get(i).getNom());
+        }
+
+        System.out.print("\nChoisir un destinataire (0 pour annuler) : ");
+        int choix = lireEntier(0, autresEtudiants.size());
+
+        if (choix == 0)
+            return;
+
+        Etudiant destinataire = autresEtudiants.get(choix - 1);
+
+        System.out.print("Votre message : ");
+        String contenu = scanner.nextLine();
+
+        Message message = expediteur.envoyerMessage(destinataire, contenu);
+        plateforme.ajouterMessage(message);
+
+        System.out.println(" Message envoyé avec succès !");
+    
+
+        pause();
+    }
+
+    private void afficherConversations(Etudiant etudiant) {
+        System.out.println("\n MES CONVERSATIONS");
+
+        List<Message> mesMessages = new ArrayList<>();
+        for (Message message : plateforme.getMessages().values()) {
+            if (message.getExpediteur().equals(etudiant) ||
+                    message.getDestinataire().equals(etudiant)) {
+                mesMessages.add(message);
+            }
+        }
+
+        if (mesMessages.isEmpty()) {
+            System.out.println(" Aucun message.");
+            pause();
+            return;
+        }
+
+        // Grouper par interlocuteur
+        Map<Etudiant, List<Message>> conversations = new HashMap<>();
+        for (Message msg : mesMessages) {
+            Etudiant interlocuteur = msg.getExpediteur().equals(etudiant) ? msg.getDestinataire() : msg.getExpediteur();
+
+            conversations.computeIfAbsent(interlocuteur, k -> new ArrayList<>()).add(msg);
+        }
+
+        System.out.println("\n CONVERSATIONS (" + conversations.size() + ")");
+        List<Etudiant> interlocuteurs = new ArrayList<>(conversations.keySet());
+
+        for (int i = 0; i < interlocuteurs.size(); i++) {
+            Etudiant interlocuteur = interlocuteurs.get(i);
+            List<Message> msgs = conversations.get(interlocuteur);
+            long nonLus = msgs.stream().filter(m -> m.getDestinataire().equals(etudiant) && !m.isLu()).count();
+
+            System.out.println("\n" + (i + 1) + ". " + interlocuteur.getNom());
+            System.out.println("    Messages : " + msgs.size() +
+                    (nonLus > 0 ? " (" + nonLus + " non lu(s))" : ""));
+
+            // Dernier message
+            Message dernier = msgs.get(msgs.size() - 1);
+            String prefix = dernier.getExpediteur().equals(etudiant) ? "Vous : " : "";
+            String snippet = dernier.getContenu().length() > 30 ? dernier.getContenu().substring(0, 30) + "..."
+                    : dernier.getContenu();
+            System.out.println( prefix + snippet);
+        }
+
+        System.out.print("\n Voir une conversation (0 pour retour) : ");
+        int choix = lireEntier(0, interlocuteurs.size());
+
+        if (choix > 0) {
+            afficherConversation(etudiant, interlocuteurs.get(choix - 1),
+                    conversations.get(interlocuteurs.get(choix - 1)));
+        }
+    }
+
+    private void afficherConversation(Etudiant etudiant, Etudiant interlocuteur, List<Message> messages) {
+        System.out.println("\n CONVERSATION AVEC " + interlocuteur.getNom());
+        System.out.println("════════════════════════════════════");
+
+        // Trier par date
+        messages.sort(Comparator.comparing(Message::getDateEnvoi));
+
+        for (Message msg : messages) {
+            String prefix = msg.getExpediteur().equals(etudiant) ? " Vous" : interlocuteur.getNom();
+            String lu = msg.isLu() ? "✓" : "✗";
+
+            System.out.println("\n" + prefix + " [" + msg.getDateEnvoi() + "] " + lu);
+            System.out.println("   " + msg.getContenu());
+
+            // Marquer comme lu si c'est pour nous
+            if (msg.getDestinataire().equals(etudiant) && !msg.isLu()) {
+                msg.marquerCommeLu();
+            }
+        }
+
+        System.out.println("════════════════════════════════════");
+
+        // Répondre
+        System.out.print("\n  Répondre (tapez votre message ou 'retour') : ");
+        String reponse = scanner.nextLine();
+
+        if (!reponse.equalsIgnoreCase("retour") && !reponse.trim().isEmpty()) {
+            Message nouveauMessage = etudiant.envoyerMessage(interlocuteur, reponse);
+            plateforme.ajouterMessage(nouveauMessage);
+            System.out.println(" Message envoyé !");
+        }
+
+        pause();
+    }
+
+    private void marquerMessageCommeLu(Etudiant etudiant) {
+        System.out.println("\n MARQUER UN MESSAGE COMME LU");
+
+        List<Message> messagesNonLus = new ArrayList<>();
+        for (Message message : plateforme.getMessages().values()) {
+            if (message.getDestinataire().equals(etudiant) && !message.isLu()) {
+                messagesNonLus.add(message);
+            }
+        }
+
+        if (messagesNonLus.isEmpty()) {
+            System.out.println(" Tous vos messages sont déjà lus.");
+            pause();
+            return;
+        }
+
+        System.out.println(" MESSAGES NON LUS (" + messagesNonLus.size() + ")");
+        for (int i = 0; i < messagesNonLus.size(); i++) {
+            Message msg = messagesNonLus.get(i);
+            System.out.println("\n" + (i + 1) + ". De : " + msg.getExpediteur().getNom());
+            System.out.println( (msg.getContenu().length() > 40 ? msg.getContenu().substring(0, 40) + "..." : msg.getContenu()));
+            System.out.println( msg.getDateEnvoi());
+        }
+
+        System.out.print("\nChoisir un message à marquer comme lu (0 pour tous) : ");
+        int choix = lireEntier(0, messagesNonLus.size());
+
+        if (choix == 0) {
+            // Tout marquer comme lu
+            for (Message msg : messagesNonLus) {
+                msg.marquerCommeLu();
+            }
+            System.out.println(" Tous les messages marqués comme lus !");
+        } else if (choix > 0) {
+            messagesNonLus.get(choix - 1).marquerCommeLu();
+            System.out.println(" Message marqué comme lu !");
+        }
+
         pause();
     }
 

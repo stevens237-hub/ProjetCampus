@@ -2,36 +2,75 @@ package fr.votreprojet.service;
 
 import fr.votreprojet.modele.Annonce;
 import fr.votreprojet.util.Categorie;
-import fr.votreprojet.modele.Etudiant;
+import fr.votreprojet.util.StatutAnnonce;
+import fr.votreprojet.util.TypeEchange;
 import java.util.*;
 
 public class RechercheSimple implements StrategieRecherche {
+   // RÉFÉRENCE au service pour accéder aux vraies données
+    private PlateformeService plateformeService;
+    
+    public RechercheSimple() {
+        this.plateformeService = PlateformeService.getInstance();
+    }
+    
     @Override
     public List<Annonce> rechercher(Map<String, Object> criteres) {
         System.out.println(" Recherche simple en cours...");
         List<Annonce> resultats = new ArrayList<>();
         
-        // Simulation - dans la vraie application, on irait chercher dans une base de données
-        for (Annonce annonce : getAnnoncesTest()) {
+        Map<Long, Annonce> toutesLesAnnonces = plateformeService.getAnnonces();
+        
+        for (Annonce annonce : toutesLesAnnonces.values()) {
+            // Ne chercher que les annonces PUBLIÉES
+            if (annonce.getStatut() != StatutAnnonce.PUBLIEE) {
+                continue;
+            }
+            
             boolean match = true;
             
+            // Critère : titre
             if (criteres.containsKey("titre") && criteres.get("titre") instanceof String) {
                 String titreRecherche = ((String) criteres.get("titre")).toLowerCase();
-                if (!annonce.getTitre().toLowerCase().contains(titreRecherche)) {
+                String titreAnnonce = annonce.getTitre() != null ? 
+                                      annonce.getTitre().toLowerCase() : "";
+                
+                if (!titreAnnonce.contains(titreRecherche)) {
                     match = false;
                 }
             }
             
+            // Critère : catégorie
             if (criteres.containsKey("categorie") && criteres.get("categorie") instanceof Categorie) {
                 Categorie categorieRecherche = (Categorie) criteres.get("categorie");
-                if (!annonce.getCategorie().equals(categorieRecherche)) {
+                if (annonce.getCategorie() != categorieRecherche) {
                     match = false;
                 }
             }
             
+            // Critère : prix maximum
             if (criteres.containsKey("prixMax") && criteres.get("prixMax") instanceof Double) {
                 Double prixMax = (Double) criteres.get("prixMax");
-                if (annonce.getPrix() > prixMax) {
+                if (annonce.getPrix() == null || annonce.getPrix() > prixMax) {
+                    match = false;
+                }
+            }
+            
+            // Critère : type d'échange
+            if (criteres.containsKey("typeEchange") && criteres.get("typeEchange") instanceof TypeEchange) {
+                TypeEchange typeRecherche = (TypeEchange) criteres.get("typeEchange");
+                if (annonce.getTypeEchange() != typeRecherche) {
+                    match = false;
+                }
+            }
+            
+            // Critère : mot-clé dans description
+            if (criteres.containsKey("motCle") && criteres.get("motCle") instanceof String) {
+                String motCle = ((String) criteres.get("motCle")).toLowerCase();
+                String description = annonce.getDescription() != null ? 
+                                     annonce.getDescription().toLowerCase() : "";
+                
+                if (!description.contains(motCle)) {
                     match = false;
                 }
             }
@@ -41,28 +80,15 @@ public class RechercheSimple implements StrategieRecherche {
             }
         }
         
-        System.out.println( resultats.size() + " résultat(s) trouvé(s)");
+        // Log détaillé pour debug
+        System.out.println("🔍 Recherche terminée :");
+        System.out.println("   • Annonces dans système : " + toutesLesAnnonces.size());
+        System.out.println("   • Annonces publiées : " + 
+                          toutesLesAnnonces.values().stream()
+                              .filter(a -> a.getStatut() == StatutAnnonce.PUBLIEE)
+                              .count());
+        System.out.println("   • Résultats trouvés : " + resultats.size());
+        
         return resultats;
-    }
-    
-    private List<Annonce> getAnnoncesTest() {
-        // Annonces de test
-        List<Annonce> annonces = new ArrayList<>();
-        Etudiant etudiantTest = new Etudiant("test@univ_smb.fr", "Testeur");
-        
-        Annonce a1 = new Annonce("Livre Java", "Livre sur la programmation Java", 
-                                Categorie.MATERIEL_SCOLAIRE, fr.votreprojet.util.TypeEchange.VENTE, 
-                                25.0, etudiantTest);
-        a1.publier();
-        
-        Annonce a2 = new Annonce("Cours Maths", "Cours particuliers de mathématiques", 
-                                Categorie.SERVICES, fr.votreprojet.util.TypeEchange.SERVICE, 
-                                15.0, etudiantTest);
-        a2.publier();
-        
-        annonces.add(a1);
-        annonces.add(a2);
-        
-        return annonces;
     }
 }
